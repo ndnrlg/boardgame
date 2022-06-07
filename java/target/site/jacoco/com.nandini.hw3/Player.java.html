@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Player.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Santorini</a> &gt; <a href="index.source.html" class="el_package">com.nandini.hw3</a> &gt; <span class="el_source">Player.java</span></div><h1>Player.java</h1><pre class="source lang-java linenums">package com.nandini.hw3;
+import java.security.InvalidParameterException;
+import java.util.ArrayList;
+
+public class Player {
+    private String id;
+    private Worker w1;
+    private Worker w2;
+    private Game game;
+    private boolean win;
+    private boolean worker1Placed;
+    private boolean worker2Placed;
+    private int builds;
+    private boolean moved;
+<span class="fc" id="L15">    public Player(String id, Worker w1, Worker w2) {</span>
+<span class="fc" id="L16">        this.id = id;</span>
+<span class="fc" id="L17">        this.w1 = w1;</span>
+<span class="fc" id="L18">        this.w2 = w2;</span>
+<span class="fc" id="L19">        this.worker1Placed = false;</span>
+<span class="fc" id="L20">        this.worker2Placed = false;</span>
+<span class="fc" id="L21">        this.builds = 0;</span>
+<span class="fc" id="L22">        this.moved = false;</span>
+<span class="fc" id="L23">    }</span>
+    /**
+     * Adding the workers to the initial positions
+     * @param pos1 - int position of this Player's worker 1 
+     * @param pos2 - int position of this Player's worker 2
+     */
+    public void placeWorkers(int pos1, int pos2) {
+<span class="fc" id="L30">        w1.placeWorker(pos1, this);</span>
+<span class="fc" id="L31">        w2.placeWorker(pos2, this);</span>
+<span class="fc" id="L32">    }</span>
+
+    /**
+     * Adding the workers to the initial positions
+     * @param pos - int position to place worker
+     */
+    public void placeWorker(int pos) {
+<span class="nc bnc" id="L39" title="All 2 branches missed.">        if (!worker1Placed) {</span>
+<span class="nc" id="L40">            w1.placeWorker(pos, this);</span>
+<span class="nc" id="L41">            worker1Placed = true;</span>
+        }
+        else {
+<span class="nc" id="L44">            w2.placeWorker(pos, this);</span>
+<span class="nc" id="L45">            worker2Placed = true;</span>
+        }
+<span class="nc" id="L47">    }</span>
+    /**
+     * Goes through a players turn
+     * @param workerID - int ID of this player's worker
+     * @param direction - direction for one of this player's workers to move
+     * @param pos - square pos to build
+     */
+    public void playRound(int workerID, String direction, ArrayList&lt;Integer&gt; pos) {
+<span class="fc" id="L55">        makeMove(workerID, direction);</span>
+<span class="fc" id="L56">        game.updateGame(this);</span>
+<span class="fc" id="L57">        build(pos);</span>
+<span class="fc" id="L58">    }</span>
+    /**
+     * Makes the move if possible for a worker ID (1 or 2)
+     * @param workerID - int ID of the worker that the player is trying to move
+     * @param direction - direction which this player's worker tries to move
+     * @throws InvalidParameterException if the workerID is invalid (not 1 or 2)
+     */
+    public void makeMove(int workerID, String direction) {
+<span class="fc" id="L66">        checkInvalidID(workerID);</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">        if (workerID == 1) {</span>
+<span class="fc" id="L68">            w1.makeMove(direction);</span>
+        }
+        else {
+<span class="fc" id="L71">            w2.makeMove(direction);</span>
+        }
+<span class="fc" id="L73">    }</span>
+    /**
+     * Checks if the worker ID is invalid
+     * @param workerID - int value of worker ID (1 or 2)
+     */
+    public void checkInvalidID(int workerID) {
+<span class="pc bpc" id="L79" title="1 of 4 branches missed.">        if (workerID != 1 &amp;&amp; workerID!= 2) {</span>
+<span class="nc" id="L80">            throw new InvalidParameterException(&quot;invalid worker ID&quot;);</span>
+        }
+<span class="fc" id="L82">    }</span>
+    /**
+     * Checks if the player has either worker on the third level
+     * @return true if this player has a worker on the third level, false otherwise
+     */
+    public boolean checkPlayerWin() {
+<span class="pc bpc" id="L88" title="1 of 6 branches missed.">        return w1.on3rdLevel() || w2.on3rdLevel() || this.win;</span>
+    }
+    /**
+     * Gets the game this player is playing
+     * @return the Game the player is playing
+     */
+    public Game getGame() {
+<span class="fc" id="L95">        return this.game;</span>
+    }
+
+    /**
+     * Sets the game the player is playing to the given game
+     * @param game - game that player will play
+     */
+    public void playerPlayGame(Game game) {
+<span class="fc" id="L103">        this.game = game;</span>
+<span class="fc" id="L104">    }</span>
+    public int getWorkersPosition(int wID) {
+<span class="fc bfc" id="L106" title="All 2 branches covered.">        if (wID == 1){</span>
+<span class="fc" id="L107">            return w1.getSquare().getPosition();</span>
+        }
+        else {
+<span class="fc" id="L110">            return w2.getSquare().getPosition();</span>
+        }
+    }
+    public String getID() {
+<span class="fc" id="L114">        return this.id;</span>
+    }
+    public void setWinTrue() {
+<span class="fc" id="L117">        this.win = true;</span>
+<span class="fc" id="L118">    }</span>
+    public void build(ArrayList&lt;Integer&gt; pos) {
+<span class="fc" id="L120">        this.w1.build(pos);</span>
+<span class="fc" id="L121">    }</span>
+    public void incrementBuilds() {
+<span class="nc" id="L123">        this.builds++;</span>
+<span class="nc" id="L124">    }</span>
+    public int getBuildsMade() {
+<span class="fc" id="L126">        return this.builds;</span>
+    }
+    public int getTotalBuilds() {
+<span class="nc" id="L129">        return w1.getBuilds();</span>
+    }
+<span class="nc bnc" id="L131" title="All 4 branches missed.">    public boolean workersPlaced() {return worker1Placed &amp;&amp; worker2Placed;}</span>
+<span class="nc" id="L132">    public void setMoved(boolean b) {this.moved = b;}</span>
+<span class="nc" id="L133">    public boolean moved() {return this.moved;}</span>
+<span class="nc" id="L134">    public void resetBuilds() {this.builds = 0;}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

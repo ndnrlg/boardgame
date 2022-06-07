@@ -1,0 +1,76 @@
+#board {
+  display: grid;
+  grid-template-columns: 120px 120px 120px 120px 120px;
+  padding: 10px;
+  padding-left: 50px;
+}
+
+.cell {
+  background-color: rgba(188, 157, 136, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  font-size: 30px;
+  height: 10vmin;
+  text-align: center;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+#handlebars {
+  visibility: hidden;
+  display: none;
+}
+
+#bottombar {
+  height: 5vh;
+}
+
+#sidebar button {
+  padding: 30px;
+  padding-top: 20px;
+  width: 100%;
+  height: 16.7%;
+  margin: 0;
+  position: relative;
+  float: left;
+  font-size: 2vw;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  background-color: rgb(223, 227, 185);;
+}
+
+#bigger_board {  
+  display: flex;
+  flex-direction:row;
+}
+
+#instructions {
+  height: 10vh;
+  background-color: white;
+  padding: 0px;
+  margin: 0px;
+  text-align: center;
+  font-size: 200%;
+  border: 1px solid black;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+#bottombar button {
+  width: 50%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  float: left;
+  font-size: 2vw;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  background-color: rgb(181, 144, 198);
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color:  #6f919c;
+}
+
+.playable { background-color: rgb(31, 146, 90);}

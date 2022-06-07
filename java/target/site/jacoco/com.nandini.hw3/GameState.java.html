@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GameState.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Santorini</a> &gt; <a href="index.source.html" class="el_package">com.nandini.hw3</a> &gt; <span class="el_source">GameState.java</span></div><h1>GameState.java</h1><pre class="source lang-java linenums">package com.nandini.hw3;
+
+import java.util.Arrays;
+
+public final class GameState {
+
+    private final Cell[] cells;
+    private final Player winner;
+    private final String turn;
+    private final String godCardA;
+    private final String godCardB;
+
+
+<span class="nc" id="L14">    private GameState(Cell[] cells, Player winner, String turn, String godCardA, String godCardB) {</span>
+<span class="nc" id="L15">        this.cells = cells;</span>
+<span class="nc" id="L16">        this.turn = turn;</span>
+<span class="nc" id="L17">        this.winner = winner;</span>
+<span class="nc" id="L18">        this.godCardA = godCardA;</span>
+<span class="nc" id="L19">        this.godCardB = godCardB;</span>
+<span class="nc" id="L20">    }</span>
+
+    /**
+     * Returns the game state based off the game
+     * @param game - game being played
+     * @param gcA - god card for player A
+     * @param gcB - god card for player B
+     * @return the game state
+     */
+    public static GameState forGame(Game game, String gcA, String gcB) {
+<span class="nc" id="L30">        Cell[] cells = getCells(game);</span>
+<span class="nc" id="L31">        Player winner = getWinner(game);</span>
+<span class="nc" id="L32">        String  turn = getTurn(game);</span>
+<span class="nc" id="L33">        return new GameState(cells, winner, turn, gcA, gcB);</span>
+    }
+
+    /**
+     * Game state in string
+     * @return JSON format of game state
+     */
+    @Override
+    public String toString() {
+<span class="nc bnc" id="L42" title="All 2 branches missed.">        if (this.winner == null) {</span>
+<span class="nc" id="L43">            return &quot;{ \&quot;cells\&quot;: &quot; + Arrays.toString(this.cells) + &quot;,&quot; +</span>
+<span class="nc" id="L44">                    &quot;\&quot;turn\&quot;: \&quot;&quot; + String.valueOf(this.turn)  + &quot;\&quot; ,&quot; +</span>
+<span class="nc" id="L45">                    &quot;\&quot;godCardA\&quot;: \&quot;&quot; + String.valueOf(this.godCardA) + &quot;\&quot; ,&quot; +</span>
+<span class="nc" id="L46">                    &quot;\&quot;godCardB\&quot;: \&quot;&quot; + String.valueOf(this.godCardB) + &quot;\&quot; }&quot; ;</span>
+        }
+<span class="nc" id="L48">        return &quot;{ \&quot;cells\&quot;: &quot; + Arrays.toString(this.cells) + &quot;,&quot; +</span>
+<span class="nc" id="L49">                &quot;\&quot;turn\&quot;: \&quot;&quot; + String.valueOf(this.turn)  + &quot;\&quot; ,&quot; +</span>
+<span class="nc" id="L50">                &quot;\&quot;winner\&quot;: \&quot;&quot; + String.valueOf(this.winner.getID())  + &quot;\&quot; ,&quot; +</span>
+<span class="nc" id="L51">                &quot;\&quot;godCardA\&quot;: \&quot;&quot; + String.valueOf(this.godCardA) + &quot;\&quot; ,&quot; +</span>
+<span class="nc" id="L52">                &quot;\&quot;godCardB\&quot;: \&quot;&quot; + String.valueOf(this.godCardB) + &quot;\&quot; }&quot; ;</span>
+    }
+    /**
+     * Gets the game board's cells
+     * @return JSON format for cells
+     */
+    private static Cell[] getCells(Game game) {
+<span class="nc" id="L59">        Cell[] cells = new Cell[25];</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">        for (int x = 0; x &lt;= 4; x++) {</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">            for (int y = 0; y &lt;= 4; y++) {</span>
+<span class="nc" id="L62">                String text = &quot;&quot;;</span>
+<span class="nc" id="L63">                String link = &quot;&quot;;</span>
+<span class="nc" id="L64">                String clazz = &quot;&quot;;</span>
+<span class="nc" id="L65">                Square sq = game.getGameBoardSquare(5 * y + x);</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">                if (sq.hasWorker()) {</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">                    if (sq.getWorker().getPlayerID().equalsIgnoreCase(&quot;A&quot;)) {</span>
+<span class="nc" id="L68">                        text = &quot;A&quot; + sq.getWorker().getId();</span>
+<span class="nc" id="L69">                        link = &quot;/play?x=&quot; + x + &quot;&amp;y=&quot; + y;</span>
+                    }
+                    else {
+<span class="nc" id="L72">                        text = &quot;B&quot; + sq.getWorker().getId();</span>
+<span class="nc" id="L73">                        link = &quot;/play?x=&quot; + x + &quot;&amp;y=&quot; + y;</span>
+                    }
+                }
+                else {
+<span class="nc" id="L77">                    clazz = &quot;playable&quot;;</span>
+<span class="nc" id="L78">                    link = &quot;/play?x=&quot; + x + &quot;&amp;y=&quot; + y;</span>
+                }
+<span class="nc bnc" id="L80" title="All 2 branches missed.">                for (int i = 0; i &lt; sq.getLevels(); i++) {</span>
+<span class="nc" id="L81">                    text = &quot;[&quot; + text + &quot;]&quot;;</span>
+                }
+<span class="nc bnc" id="L83" title="All 2 branches missed.">                if (sq.hasDome()) {</span>
+<span class="nc" id="L84">                    text = &quot;DOME&quot;;</span>
+                }
+<span class="nc" id="L86">                cells[5 * y + x] = new Cell(text, clazz, link);</span>
+            }
+        }
+<span class="nc" id="L89">        return cells;</span>
+    }
+
+    private static Player getWinner(Game game) {
+<span class="nc" id="L93">        return game.getWinner();</span>
+    }
+
+    private static String getTurn(Game game) {
+<span class="nc" id="L97">        return game.getTurn();</span>
+    }
+}
+class Cell {
+    private final String text;
+    private final String clazz;
+    private final String link;
+
+<span class="nc" id="L105">    Cell(String text, String clazz, String link) {</span>
+<span class="nc" id="L106">        this.text = text;</span>
+<span class="nc" id="L107">        this.clazz = clazz;</span>
+<span class="nc" id="L108">        this.link = link;</span>
+<span class="nc" id="L109">    }</span>
+    public String getText() {
+<span class="nc" id="L111">        return this.text;</span>
+    }
+    public String getClazz() {
+<span class="nc" id="L114">        return this.clazz;</span>
+    }
+    public String getLink() {
+<span class="nc" id="L117">        return this.link;</span>
+    }
+    /**
+     * A cell in string
+     * @return JSON format of cell
+     */
+    @Override
+    public String toString() {
+<span class="nc" id="L125">        return &quot;{ \&quot;text\&quot;: \&quot;&quot; + this.text + &quot;\&quot;,&quot; +</span>
+                &quot; \&quot;clazz\&quot;: \&quot;&quot; + this.clazz + &quot;\&quot;,&quot; +
+                &quot; \&quot;link\&quot;: \&quot;&quot; + this.link + &quot;\&quot;}&quot;;
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

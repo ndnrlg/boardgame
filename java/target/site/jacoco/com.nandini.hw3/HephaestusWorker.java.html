@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HephaestusWorker.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Santorini</a> &gt; <a href="index.source.html" class="el_package">com.nandini.hw3</a> &gt; <span class="el_source">HephaestusWorker.java</span></div><h1>HephaestusWorker.java</h1><pre class="source lang-java linenums">package com.nandini.hw3;
+
+import java.util.ArrayList;
+
+public class HephaestusWorker extends Worker{
+    private int firstBuild;
+    public HephaestusWorker(int workerID) {
+<span class="fc" id="L8">        super(workerID);</span>
+<span class="fc" id="L9">        setBuilds(2);</span>
+<span class="fc" id="L10">        firstBuild = -1;</span>
+<span class="fc" id="L11">    }</span>
+    /**
+     * Resets the firstbuild field to -1 after a round
+     */
+    public void resetFirstBuild() {
+<span class="pc bpc" id="L16" title="1 of 2 branches missed.">        if (getPlayer().getBuildsMade() == 0) {</span>
+<span class="fc" id="L17">            firstBuild = -1;</span>
+        }
+<span class="fc" id="L19">    }</span>
+    /**
+     * Hephaestus optional build is -1 if player wants to pass on it. Prevents building
+     * on different square with firstBuild field.
+     * @param pos - positions to build on square
+     */
+    @Override
+    public void build(ArrayList&lt;Integer&gt; pos) {
+<span class="fc" id="L27">        resetFirstBuild();</span>
+<span class="pc bpc" id="L28" title="1 of 2 branches missed.">        if (!getPlayer().checkPlayerWin()) {</span>
+<span class="fc bfc" id="L29" title="All 2 branches covered.">            for (int i = 0; i &lt; pos.size(); i++) {</span>
+<span class="fc bfc" id="L30" title="All 2 branches covered.">                if (pos.get(i) != -1) {</span>
+<span class="pc bpc" id="L31" title="1 of 2 branches missed.">                    if (canBuildDome(pos.get(i))) {</span>
+<span class="nc" id="L32">                        throw new IllegalStateException();</span>
+                    }
+<span class="fc bfc" id="L34" title="All 4 branches covered.">                    if (firstBuild != -1 &amp;&amp; firstBuild != pos.get(i)) {</span>
+<span class="fc" id="L35">                        throw new IllegalStateException();</span>
+                    }
+<span class="fc bfc" id="L37" title="All 2 branches covered.">                    if (firstBuild == -1) {</span>
+<span class="fc" id="L38">                            firstBuild = pos.get(0);</span>
+<span class="fc" id="L39">                            Square buildSq = getSquare().getNewBoardSquare(pos.get(i));</span>
+<span class="fc" id="L40">                            buildSq.build();</span>
+<span class="fc" id="L41">                    }</span>
+                    else {
+<span class="fc" id="L43">                        Square buildSq = getSquare().getNewBoardSquare(pos.get(i));</span>
+<span class="fc" id="L44">                        buildSq.build();</span>
+                    }
+                }
+            }
+        }
+<span class="fc" id="L49">    }</span>
+
+    /**
+     * Checks if you can immediately build a dome on a square
+     * @param pos - position of square to check
+     * @return true if you can build dome, false otherwises
+     */
+    public boolean canBuildDome(int pos) {
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">        return getSquare().getNewBoardSquare(pos).getLevels() == 3;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

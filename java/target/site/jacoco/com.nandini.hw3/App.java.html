@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>App.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Santorini</a> &gt; <a href="index.source.html" class="el_package">com.nandini.hw3</a> &gt; <span class="el_source">App.java</span></div><h1>App.java</h1><pre class="source lang-java linenums">package com.nandini.hw3;
+import java.io.IOException;
+import java.util.Map;
+import fi.iki.elonen.NanoHTTPD;
+
+public class App extends NanoHTTPD
+{
+    public static void main(String[] args) {
+        try {
+<span class="nc" id="L10">            new App();</span>
+<span class="nc" id="L11">        } catch (IOException ioe) {</span>
+<span class="nc" id="L12">            System.err.println(&quot;Couldn't start server:\n&quot; + ioe);</span>
+<span class="nc" id="L13">        }</span>
+<span class="nc" id="L14">    }</span>
+
+    private Game game;
+    private String gcA;
+    private String gcB;
+
+    public App() throws IOException {
+<span class="nc" id="L21">        super(8080);</span>
+
+<span class="nc" id="L23">        this.game = new Game();</span>
+<span class="nc" id="L24">        this.gcA = &quot;N/A&quot;;</span>
+<span class="nc" id="L25">        this.gcB = &quot;N/A&quot;;</span>
+<span class="nc" id="L26">        start(NanoHTTPD.SOCKET_READ_TIMEOUT, false);</span>
+<span class="nc" id="L27">        System.out.println(&quot;\nRunning!\n&quot;);</span>
+<span class="nc" id="L28">    }</span>
+    @Override
+    public Response serve(IHTTPSession session) {
+<span class="nc" id="L31">        String uri = session.getUri();</span>
+<span class="nc" id="L32">        Map&lt;String, String&gt; params = session.getParms();</span>
+<span class="nc bnc" id="L33" title="All 2 branches missed.">        if (uri.equals(&quot;/newgame&quot;)) {</span>
+<span class="nc" id="L34">            this.game = new Game();</span>
+<span class="nc" id="L35">            this.gcA = &quot;N/A&quot;;</span>
+<span class="nc" id="L36">            this.gcB = &quot;N/A&quot;;</span>
+        }
+<span class="nc bnc" id="L38" title="All 2 branches missed.">        else if(uri.equals(&quot;/none&quot;)) {</span>
+<span class="nc bnc" id="L39" title="All 2 branches missed.">            if (game.getTurn() == &quot;A&quot;) {</span>
+<span class="nc" id="L40">                gcA = &quot;N/A&quot;;</span>
+            }
+            else {
+<span class="nc" id="L43">                gcB = &quot;N/A&quot;;</span>
+            }
+<span class="nc" id="L45">            game.updateTurn();</span>
+        }
+<span class="nc bnc" id="L47" title="All 2 branches missed.">        else if(uri.equals(&quot;/demeter&quot;)) {</span>
+<span class="nc" id="L48">            game.setPlayer(new Player(game.getTurn(),</span>
+                    new DemeterWorker(1), new DemeterWorker(2)));
+<span class="nc bnc" id="L50" title="All 2 branches missed.">            if (game.getTurn() == &quot;A&quot;) {</span>
+<span class="nc" id="L51">                gcA = &quot;Demeter&quot;;</span>
+            }
+            else {
+<span class="nc" id="L54">                gcB = &quot;Demeter&quot;;</span>
+            }
+<span class="nc" id="L56">            game.updateTurn();</span>
+        }
+<span class="nc bnc" id="L58" title="All 2 branches missed.">        else if(uri.equals(&quot;/minotaur&quot;)) {</span>
+<span class="nc" id="L59">            game.setPlayer(new Player(game.getTurn(),</span>
+                    new MinotaurWorker(1), new MinotaurWorker(2)));
+<span class="nc bnc" id="L61" title="All 2 branches missed.">            if (game.getTurn() == &quot;A&quot;) {</span>
+<span class="nc" id="L62">                gcA = &quot;Minotaur&quot;;</span>
+            }
+            else {
+<span class="nc" id="L65">                gcB = &quot;Minotaur&quot;;</span>
+            }
+<span class="nc" id="L67">            game.updateTurn();</span>
+        }
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        else if(uri.equals(&quot;/pan&quot;)) {</span>
+<span class="nc" id="L70">            game.setPlayer(new Player(game.getTurn(),</span>
+                    new PanWorker(1), new PanWorker(2)));
+<span class="nc bnc" id="L72" title="All 2 branches missed.">            if (game.getTurn() == &quot;A&quot;) {</span>
+<span class="nc" id="L73">                gcA = &quot;Pan&quot;;</span>
+            }
+            else {
+<span class="nc" id="L76">                gcB = &quot;Pan&quot;;</span>
+            }
+<span class="nc" id="L78">            game.updateTurn();</span>
+        }
+<span class="nc bnc" id="L80" title="All 2 branches missed.">        else if(uri.equals(&quot;/apollo&quot;)) {</span>
+<span class="nc" id="L81">            game.setPlayer(new Player(game.getTurn(),</span>
+                    new ApolloWorker(1), new ApolloWorker(2)));
+<span class="nc bnc" id="L83" title="All 2 branches missed.">            if (game.getTurn() == &quot;A&quot;) {</span>
+<span class="nc" id="L84">                gcA = &quot;Apollo&quot;;</span>
+            }
+            else {
+<span class="nc" id="L87">                gcB = &quot;Apollo&quot;;</span>
+            }
+<span class="nc" id="L89">            game.updateTurn();</span>
+        }
+<span class="nc bnc" id="L91" title="All 2 branches missed.">        else if (uri.equals(&quot;/hephaestus&quot;)) {</span>
+<span class="nc" id="L92">            game.setPlayer(new Player(game.getTurn(),</span>
+                    new HephaestusWorker(1), new HephaestusWorker(2)));
+<span class="nc bnc" id="L94" title="All 2 branches missed.">            if (game.getTurn() == &quot;A&quot;) {</span>
+<span class="nc" id="L95">                gcA = &quot;Hephaestus&quot;;</span>
+            }
+            else {
+<span class="nc" id="L98">                gcB = &quot;Hephaestus&quot;;</span>
+            }
+<span class="nc" id="L100">            game.updateTurn();</span>
+        }
+<span class="nc bnc" id="L102" title="All 2 branches missed.">        else if (uri.equals(&quot;/play&quot;)) {</span>
+<span class="nc" id="L103">            game.play(Integer.parseInt(params.get(&quot;y&quot;))*5 + Integer.parseInt(params.get(&quot;x&quot;)));</span>
+        }
+<span class="nc bnc" id="L105" title="All 2 branches missed.">        else if(uri.equals(&quot;/pass&quot;)) {</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">            if (game.getPlayer().getTotalBuilds() == 2) {</span>
+<span class="nc" id="L107">                game.getPlayer().resetBuilds();</span>
+<span class="nc" id="L108">                game.getPlayer().setMoved(false);</span>
+<span class="nc" id="L109">                game.updateTurn();</span>
+<span class="nc" id="L110">                System.out.println(gcA);</span>
+            }
+        }
+<span class="nc" id="L113">        GameState gameplay = GameState.forGame(this.game, gcA, gcB);</span>
+<span class="nc" id="L114">        return newFixedLengthResponse(gameplay.toString());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

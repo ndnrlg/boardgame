@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Game.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Santorini</a> &gt; <a href="index.source.html" class="el_package">com.nandini.hw3</a> &gt; <span class="el_source">Game.java</span></div><h1>Game.java</h1><pre class="source lang-java linenums">package com.nandini.hw3;
+
+import java.util.ArrayList;
+
+public class Game {
+    private final Board board;
+    private Player playerA;
+    private Player playerB;
+    private int round;
+    private String winnerID;
+    private String turn;
+    private Player player;
+    private Worker worker;
+<span class="fc" id="L14">    public Game() {</span>
+<span class="fc" id="L15">        round = 1;</span>
+<span class="fc" id="L16">        playerA = new Player(&quot;A&quot;, new Worker(1), new Worker(2));</span>
+<span class="fc" id="L17">        playerB = new Player(&quot;B&quot;, new Worker(1), new Worker(2));</span>
+<span class="fc" id="L18">        playerA.playerPlayGame(this);</span>
+<span class="fc" id="L19">        playerB.playerPlayGame(this);</span>
+<span class="fc" id="L20">        turn = &quot;A&quot;;</span>
+<span class="fc" id="L21">        board = new Board();</span>
+<span class="fc" id="L22">        winnerID = &quot;&quot;;</span>
+<span class="fc" id="L23">        player = playerA;</span>
+<span class="fc" id="L24">        worker = null;</span>
+<span class="fc" id="L25">    }</span>
+    /**
+     * Sets player to a new player
+     * @param p - assigns p to the correct player
+     */
+    public void setPlayer(Player p) {
+<span class="fc bfc" id="L31" title="All 2 branches covered.">        if (p.getID().equalsIgnoreCase(&quot;A&quot;)) {</span>
+<span class="fc" id="L32">            playerA = p;</span>
+<span class="fc" id="L33">            playerA.playerPlayGame(this);</span>
+        }
+        else {
+<span class="fc" id="L36">            playerB = p;</span>
+<span class="fc" id="L37">            playerB.playerPlayGame(this);</span>
+        }
+<span class="fc" id="L39">    }</span>
+    /**
+     * Checks if the player in parameter has won the game. Updates winner if player has won.
+     * Updates game to next round.
+     * @param player - Player that has just made a move.
+     */
+    public void updateGame(Player player) {
+<span class="fc bfc" id="L46" title="All 2 branches covered.">        if (player.checkPlayerWin()) {</span>
+<span class="fc" id="L47">            System.out.println(&quot;Congrats Player &quot; + player.getID() + &quot; you have won Santorini!&quot;);</span>
+<span class="fc" id="L48">            winnerID = player.getID();</span>
+        }
+<span class="fc" id="L50">        nextRound();</span>
+<span class="fc" id="L51">    }</span>
+    /**
+     * Plays the game for the player whose turn it is.
+     * @param workerID - the ID of the worker to move. Must be 1 or 2.
+     * @param direction - the direction that the worker must move. Must be &quot;U&quot;, &quot;D&quot;, &quot;L&quot;, &quot;R&quot;,
+     *                  &quot;LU&quot;, &quot;LD&quot;, &quot;RU&quot;, or &quot;RD&quot;.
+     * @param buildPos - ArrayList of the build position for Worker
+     */
+    public void play(int workerID, String direction, ArrayList&lt;Integer&gt; buildPos) {
+<span class="fc bfc" id="L60" title="All 2 branches covered.">        if (winnerID.equals(&quot;&quot;)) {</span>
+<span class="fc" id="L61">            System.out.println(&quot;Round: &quot; + round);</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">            if (turn.equals(&quot;A&quot;)) {</span>
+<span class="fc" id="L63">                playerA.playRound(workerID, direction, buildPos);</span>
+<span class="fc" id="L64">                turn = &quot;B&quot;;</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">            } else if (turn.equals(&quot;B&quot;)) {</span>
+<span class="fc" id="L66">                playerB.playRound(workerID, direction, buildPos);</span>
+<span class="fc" id="L67">                turn = &quot;A&quot;;</span>
+            }
+        }
+        else {
+<span class="fc" id="L71">            System.out.println(&quot;Game has ended, Player &quot; + winnerID + &quot; has already won&quot;);</span>
+        }
+<span class="fc" id="L73">    }</span>
+    /**
+     * Plays a round of the game.
+     * @param pos - square position
+     * @return the game after a play
+     */
+    public Game play(int pos) {
+<span class="nc bnc" id="L80" title="All 2 branches missed.">        if (!winnerID.equals(&quot;&quot;)) {</span>
+<span class="nc" id="L81">            return this;</span>
+        }
+<span class="nc bnc" id="L83" title="All 4 branches missed.">        if (!playerA.workersPlaced() || !playerB.workersPlaced()) {</span>
+<span class="nc" id="L84">            placeWorker(pos);</span>
+        }
+<span class="nc bnc" id="L86" title="All 6 branches missed.">        else if (worker == null &amp;&amp; getGameBoardSquare(pos).hasWorker() &amp;&amp; player.moved() == false) {</span>
+<span class="nc" id="L87">            worker = getGameBoardSquare(pos).getWorker();</span>
+<span class="nc" id="L88">            System.out.println(&quot;selected worker: &quot; + worker.getPlayerID() + worker.getId());</span>
+        }
+<span class="nc bnc" id="L90" title="All 4 branches missed.">        else if (worker != null &amp;&amp; player.moved() == false) {</span>
+<span class="nc" id="L91">            move(pos);</span>
+        }
+<span class="nc bnc" id="L93" title="All 4 branches missed.">        else if (player.moved() == true &amp;&amp; player.getBuildsMade() &lt; player.getTotalBuilds()){</span>
+<span class="nc" id="L94">            build(new ArrayList&lt;Integer&gt;() {{add(pos);}});</span>
+        }
+<span class="nc" id="L96">        return this;</span>
+    }
+    /**
+     * This move method is used for testing purposes as it throws exceptions.
+     * @param workerID - id of the worker to move
+     * @param direction - direction to move
+     */
+    public void move(int workerID, String direction) {
+<span class="nc" id="L104">        player.makeMove(workerID, direction);</span>
+<span class="nc" id="L105">        updateGame(player);</span>
+<span class="nc" id="L106">    }</span>
+    /**
+     * Moves onto a position
+     * @param pos - position on grid to move on
+     */
+    public void move(int pos) {
+<span class="nc bnc" id="L112" title="All 2 branches missed.">        if (worker.getPlayerID().equalsIgnoreCase(turn)) {</span>
+            try {
+<span class="nc" id="L114">                worker.makeMove(Square.getDir(worker.getPosition(), pos));</span>
+<span class="nc" id="L115">                worker = null;</span>
+<span class="nc" id="L116">                updateGame(player);</span>
+<span class="nc" id="L117">                player.setMoved(true);</span>
+<span class="nc" id="L118">            } catch (IllegalStateException e) {</span>
+<span class="nc" id="L119">                System.out.println(&quot;invalid place&quot;);</span>
+<span class="nc" id="L120">            }</span>
+        }
+<span class="nc" id="L122">        else {worker = null;}</span>
+<span class="nc" id="L123">    }</span>
+    /**
+     * This build method is used for testing purposes as it throws an exception if invalid.
+     * @param buildPos - build pos
+     */
+    public void build(ArrayList&lt;Integer&gt; buildPos) {
+        try {
+<span class="nc" id="L130">            player.build(buildPos);</span>
+<span class="nc" id="L131">            player.incrementBuilds();</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">            if (player.getBuildsMade() == player.getTotalBuilds()) {</span>
+<span class="nc" id="L133">                player.resetBuilds();</span>
+<span class="nc" id="L134">                player.setMoved(false);</span>
+<span class="nc" id="L135">                System.out.println(&quot;build for &quot; + player.getID());</span>
+<span class="nc" id="L136">                updateTurn();</span>
+            }
+        }
+<span class="nc" id="L139">        catch (IllegalStateException e) {</span>
+<span class="nc" id="L140">            System.out.println(&quot;invalid build&quot;);</span>
+<span class="nc" id="L141">        }</span>
+<span class="nc" id="L142">    }</span>
+    /**
+     * Places the workers at the positions passed in, the first two positions are for player A,
+     * second 2 positions are for player B
+     * @param pos1A - position that worker 1 of player A will be placed on
+     * @param pos2A - position that worker 2 of player A will be placed on
+     * @param pos1B - position that worker 1 of player B will be placed on
+     * @param pos2B - position that worker 2 of player B will be placed on
+     */
+    public void setUpWorkers(int pos1A, int pos2A, int pos1B, int pos2B) {
+<span class="fc" id="L152">        playerA.placeWorkers(pos1A, pos2A);</span>
+<span class="fc" id="L153">        playerB.placeWorkers(pos1B, pos2B);</span>
+<span class="fc" id="L154">    }</span>
+    /**
+     * Tries to place worker on position pos
+     * @param pos - position to place worker
+     */
+    public void placeWorker(int pos) {
+        try {
+<span class="nc" id="L161">            player.placeWorker(pos);</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">            if (player.workersPlaced()) {</span>
+<span class="nc" id="L163">                System.out.println(&quot;both workers placed for player &quot; + player.getID());</span>
+<span class="nc" id="L164">                updateTurn();</span>
+            }
+        }
+<span class="nc" id="L167">        catch (IllegalStateException e) {</span>
+<span class="nc" id="L168">            System.out.println(&quot;invalid place&quot;);</span>
+<span class="nc" id="L169">        }</span>
+<span class="nc" id="L170">    }</span>
+    /**
+     * Gets worker position of playerA of this game
+     * @param wID - the ID of the worker that is being checked
+     * @return pos of worker
+     */
+    public int getPLayerAWorkerPos(int wID) {
+<span class="fc" id="L177">        return playerA.getWorkersPosition(wID);</span>
+    }
+    /**
+     * Gets worker position of playerB of this game
+     * @param wID - the ID of the worker that is being checked
+     * @return pos of worker
+     */
+    public int getPLayerBWorkerPos(int wID) {
+<span class="fc" id="L185">        return playerB.getWorkersPosition(wID);</span>
+    }
+    /**
+     * Increments round by 1
+     */
+    public void nextRound() {
+<span class="fc" id="L191">        this.round++;</span>
+<span class="fc" id="L192">    }</span>
+    /**
+     * Gets the game board square at pos
+     * @param pos - the position of the square
+     * @return Square at position pos on board
+     */
+    public Square getGameBoardSquare(int pos) {
+<span class="fc" id="L199">        return board.getSquare(pos);</span>
+    }
+    /**
+     * Gets the id of the winner of this game
+     * @return &quot;&quot; if there is no winner, &quot;A&quot; if player A won, &quot;B&quot; if player B won
+     */
+    public String getWinnerID() {
+<span class="fc" id="L206">        return winnerID;</span>
+    }
+    /**
+     * Gets the winner
+     * @return Player winner or null if there is no winner
+     */
+    public Player getWinner() {
+<span class="nc bnc" id="L213" title="All 2 branches missed.">        if (winnerID.equalsIgnoreCase(&quot;A&quot;)) {return this.playerA;}</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">        else if (winnerID.equalsIgnoreCase(&quot;B&quot;)) {return this.playerB;}</span>
+<span class="nc" id="L215">        else {return null;}</span>
+    }
+    /**
+     * The current player's ID
+     * @return ID of player whose turn it is
+     */
+    public String getTurn(){
+<span class="nc" id="L222">        return this.turn;</span>
+    }
+
+    /**
+     * Changes the turn to the other player
+     */
+    public void updateTurn() {
+<span class="nc bnc" id="L229" title="All 2 branches missed.">        if (this.turn == &quot;A&quot;) {</span>
+<span class="nc" id="L230">            this.turn = &quot;B&quot;;</span>
+<span class="nc" id="L231">            this.player = playerB;</span>
+        }
+        else {
+<span class="nc" id="L234">            this.turn = &quot;A&quot;;</span>
+<span class="nc" id="L235">            this.player = playerA;</span>
+        }
+<span class="nc" id="L237">    }</span>
+    /**
+     * @return the current players
+     */
+<span class="nc" id="L241">    public Player getPlayer() {return this.player;}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

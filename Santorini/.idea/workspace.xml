@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="0ed94c7d-0213-4b98-8925-05ab75c91fc8" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+        <option name="usePluginRegistry" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectId" id="252AjT1bzIDEX03OzZSOsJZcksE" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="com.google.cloudcode.ide_session_index" value="20220420_0000" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="Errors" />
+  </component>
+  <component name="RunManager" selected="JUnit.AppTest">
+    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.nandini.hw3.App" />
+      <module name="Santorini" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.nandini.hw3.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AppTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Santorini" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.nandini.hw3.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.nandini.hw3" />
+      <option name="MAIN_CLASS_NAME" value="com.nandini.hw3.AppTest" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AppTest.getSquareInvalidParam" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Santorini" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.nandini.hw3.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.nandini.hw3" />
+      <option name="MAIN_CLASS_NAME" value="com.nandini.hw3.AppTest" />
+      <option name="METHOD_NAME" value="getSquareInvalidParam" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AppTest.testAWinnerTwo" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Santorini" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.nandini.hw3.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.nandini.hw3" />
+      <option name="MAIN_CLASS_NAME" value="com.nandini.hw3.AppTest" />
+      <option name="METHOD_NAME" value="testAWinnerTwo" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AppTest.testInvalidBuildOnDome" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Santorini" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.nandini.hw3.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.nandini.hw3" />
+      <option name="MAIN_CLASS_NAME" value="com.nandini.hw3.AppTest" />
+      <option name="METHOD_NAME" value="testInvalidBuildOnDome" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <option name="MAIN_CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.AppTest" />
+        <item itemvalue="Application.App" />
+        <item itemvalue="JUnit.AppTest.getSquareInvalidParam" />
+        <item itemvalue="JUnit.AppTest.testAWinnerTwo" />
+        <item itemvalue="JUnit.AppTest.testInvalidBuildOnDome" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0ed94c7d-0213-4b98-8925-05ab75c91fc8" name="Changes" comment="" />
+      <created>1644714945183</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1644714945183</updated>
+      <workItem from="1644714946448" duration="3680000" />
+      <workItem from="1644719872024" duration="2781000" />
+      <workItem from="1644849106397" duration="948000" />
+      <workItem from="1644870580989" duration="5250000" />
+      <workItem from="1644886807540" duration="578000" />
+      <workItem from="1644894242677" duration="1429000" />
+      <workItem from="1644971022008" duration="7349000" />
+      <workItem from="1645044361289" duration="14862000" />
+      <workItem from="1645120835680" duration="12746000" />
+      <workItem from="1645220320405" duration="743000" />
+      <workItem from="1645240147863" duration="8999000" />
+      <workItem from="1645313121535" duration="3756000" />
+      <workItem from="1647564269131" duration="16993000" />
+      <workItem from="1647662335681" duration="8163000" />
+      <workItem from="1647745319480" duration="14896000" />
+      <workItem from="1647802984896" duration="293000" />
+      <workItem from="1647834578521" duration="1669000" />
+      <workItem from="1648091776159" duration="984000" />
+      <workItem from="1649434562030" duration="100000" />
+      <workItem from="1649434668420" duration="5000" />
+      <workItem from="1649434683288" duration="56000" />
+      <workItem from="1650496063465" duration="18000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

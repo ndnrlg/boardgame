@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Worker.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Santorini</a> &gt; <a href="index.source.html" class="el_package">com.nandini.hw3</a> &gt; <span class="el_source">Worker.java</span></div><h1>Worker.java</h1><pre class="source lang-java linenums">package com.nandini.hw3;
+
+import java.security.InvalidParameterException;
+import java.util.ArrayList;
+
+public class Worker {
+    private int id;
+    private Square square;
+    private Player player;
+    private int builds;
+<span class="fc" id="L11">    public Worker(int id) {</span>
+<span class="fc" id="L12">        this.id = id;</span>
+<span class="fc" id="L13">        square = null;</span>
+<span class="fc" id="L14">        player = null;</span>
+<span class="fc" id="L15">        builds = 1;</span>
+<span class="fc" id="L16">    }</span>
+    /**
+     * Sets the square of this worker to the square parameter
+     * @param square - square of this worker
+     */
+    public void setOnSquare(Square square) {
+<span class="fc" id="L22">        this.square = square;</span>
+<span class="fc" id="L23">    }</span>
+    /**
+     * Places worker on an unoccupied and valid square position on the board
+     * @param pos - location on board to place worker
+     * @param player - the Player that is initialized to this worker
+     * @throws InvalidParameterException when the pos is invalid (see checkPosInRange)
+     * @throws IllegalStateException when there is a Worker on Square at pos (see hasWorker)
+     */
+    public void placeWorker(int pos, Player player) {
+<span class="fc" id="L32">        this.player = player;</span>
+<span class="pc bpc" id="L33" title="2 of 4 branches missed.">        if (!(pos &gt;= 0 &amp;&amp; pos &lt; 25)) {</span>
+<span class="nc" id="L34">            throw new InvalidParameterException(&quot;invalid position on board&quot;);</span>
+        }
+<span class="fc" id="L36">        Square p = player.getGame().getGameBoardSquare(pos);</span>
+<span class="fc bfc" id="L37" title="All 2 branches covered.">        if (p.hasWorker()) {</span>
+<span class="fc" id="L38">            throw new IllegalStateException(&quot;worker is present on square&quot;);</span>
+        }
+<span class="fc" id="L40">        this.square = player.getGame().getGameBoardSquare(pos);</span>
+<span class="fc" id="L41">        this.square.addWorker(this);</span>
+<span class="fc" id="L42">    }</span>
+    /**
+     * Determines whether the square that this worker is on is at the third level (without dome)
+     * @return true if the worker is on a square of 3 levels and doesn't have a dome, false otherwise
+     */
+    public boolean on3rdLevel() {
+<span class="pc bpc" id="L48" title="1 of 4 branches missed.">        return square.getLevels() == 3 &amp;&amp; !square.hasDome();</span>
+    }
+    /**
+     * Makes a move if the new position (given the direction) is on the board, and the new position is a valid place to move
+     * (has appropriate level difference, does not have a worker, and does not have a dome)
+     * @param direction - direction to move (U, D, L, R, LU, LD, RU, RD)
+     * @throws IllegalStateException if the direction given is invalid
+     * @throws IllegalStateException if the direction results in an invalid position
+     * @throws IllegalStateException if the new square is not valid to move on
+     */
+    public void makeMove(String direction) {
+<span class="fc" id="L59">        int pos = getPos(direction);</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">        if (!square.isValidToMoveOn(pos)) {</span>
+<span class="fc" id="L61">            throw new IllegalStateException(&quot;worker cannot move to that position&quot;);</span>
+        }
+<span class="fc" id="L63">        updateSquare(pos);</span>
+<span class="fc" id="L64">    }</span>
+    /**
+     * Places worker and updates the square with worker
+     * @param pos - places a worker on a new square
+     */
+    public void updateSquare(int pos) {
+<span class="fc" id="L70">        System.out.println(&quot;Moving Player &quot; + player.getID() + &quot;'s Worker #&quot; + this.id + &quot; from position &quot; + square.getPosition()</span>
+        + &quot; to position &quot; + pos);
+<span class="fc" id="L72">        this.square.removeWorker();</span>
+<span class="fc" id="L73">        this.square = this.square.getNewBoardSquare(pos);</span>
+<span class="fc" id="L74">        this.square.addWorker(this);</span>
+<span class="fc" id="L75">    }</span>
+
+    /**
+     * Gets the new position based on the direction of the move
+     * @param direction - direction of the move (U, D, L, R, LU, LD, RU, RD)
+     * @return int value of new position on the board
+     * @throws IllegalStateException if direction is not valid direction not (U, D, L, R, LU, LD, RU, RD)
+     */
+    public int getPos(String direction) {
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        if (validInputDirection(direction)) {</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">            if (direction.equalsIgnoreCase(&quot;L&quot;)) {</span>
+<span class="fc" id="L86">                checkSideBounds(0);</span>
+<span class="fc" id="L87">                return this.square.getPosition() - 1;</span>
+            }
+<span class="fc bfc" id="L89" title="All 2 branches covered.">            if (direction.equalsIgnoreCase(&quot;R&quot;)) {</span>
+<span class="fc" id="L90">                checkSideBounds(4);</span>
+<span class="fc" id="L91">                return this.square.getPosition() + 1;</span>
+            }
+<span class="fc bfc" id="L93" title="All 2 branches covered.">            if (direction.equalsIgnoreCase(&quot;U&quot;)) {</span>
+<span class="fc" id="L94">                checkUpperBounds();</span>
+<span class="fc" id="L95">                return this.square.getPosition() - 5;</span>
+            }
+<span class="fc bfc" id="L97" title="All 2 branches covered.">            if (direction.equalsIgnoreCase(&quot;D&quot;)) {</span>
+<span class="fc" id="L98">                checkLowerBounds();</span>
+<span class="fc" id="L99">                return this.square.getPosition() + 5;</span>
+            }
+<span class="fc bfc" id="L101" title="All 2 branches covered.">            if (direction.equalsIgnoreCase(&quot;LU&quot;)) {</span>
+<span class="fc" id="L102">                checkSideBounds(0);</span>
+<span class="fc" id="L103">                checkUpperBounds();</span>
+<span class="fc" id="L104">                return this.square.getPosition() - 6;</span>
+            }
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">            if (direction.equalsIgnoreCase(&quot;LD&quot;)) {</span>
+<span class="nc" id="L107">                checkSideBounds(0);</span>
+<span class="nc" id="L108">                checkLowerBounds();</span>
+<span class="nc" id="L109">                return this.square.getPosition() + 4;</span>
+            }
+<span class="fc bfc" id="L111" title="All 2 branches covered.">            if (direction.equalsIgnoreCase(&quot;RU&quot;)) {</span>
+<span class="fc" id="L112">                checkSideBounds(4);</span>
+<span class="fc" id="L113">                checkUpperBounds();</span>
+<span class="fc" id="L114">                return this.square.getPosition() - 4;</span>
+            }
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">            if (direction.equalsIgnoreCase(&quot;RD&quot;)) {</span>
+<span class="fc" id="L117">                checkSideBounds(4);</span>
+<span class="fc" id="L118">                checkLowerBounds();</span>
+<span class="fc" id="L119">                return this.square.getPosition() + 6;</span>
+            }
+        }
+        else {
+<span class="fc" id="L123">            throw new IllegalStateException(&quot;invalid direction on board&quot;);</span>
+        }
+<span class="nc" id="L125">        return -1;</span>
+    }
+
+    /**
+     * Checks if the direction input is valid
+     * @param direction - direction to move
+     * @return true if direction is valid false otherwise
+     */
+    private boolean validInputDirection(String direction) {
+<span class="fc bfc" id="L134" title="All 4 branches covered.">        return direction.equalsIgnoreCase(&quot;L&quot;) || direction.equalsIgnoreCase(&quot;R&quot;) ||</span>
+<span class="fc bfc" id="L135" title="All 4 branches covered.">                direction.equalsIgnoreCase(&quot;U&quot;) || direction.equalsIgnoreCase(&quot;D&quot;) ||</span>
+<span class="pc bpc" id="L136" title="1 of 4 branches missed.">                direction.equalsIgnoreCase(&quot;LU&quot;) || direction.equalsIgnoreCase(&quot;LD&quot;) ||</span>
+<span class="fc bfc" id="L137" title="All 4 branches covered.">                direction.equalsIgnoreCase(&quot;RU&quot;) || direction.equalsIgnoreCase(&quot;RD&quot;);</span>
+    }
+    /**
+     * Checks lower bounds of board
+     */
+    public void checkLowerBounds() {
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">        if (this.square.getPosition() &gt;= 20) {</span>
+<span class="nc" id="L144">            throw new IllegalStateException(&quot;invalid position on board&quot;);</span>
+        }
+<span class="fc" id="L146">    }</span>
+    /**
+     * Checks upper bounds of board
+     */
+    public void checkUpperBounds() {
+<span class="fc bfc" id="L151" title="All 2 branches covered.">        if (this.square.getPosition() &lt;= 4) {</span>
+<span class="fc" id="L152">            throw new IllegalStateException(&quot;invalid position on board&quot;);</span>
+        }
+<span class="fc" id="L154">    }</span>
+    /**
+     * Checks side bounds of board
+     * @param i - side cols
+     */
+    public void checkSideBounds(int i) {
+<span class="pc bpc" id="L160" title="1 of 2 branches missed.">        if (this.square.getPosition()%5 == i) {</span>
+<span class="nc" id="L161">            throw new IllegalStateException(&quot;invalid position on board&quot;);</span>
+        }
+<span class="fc" id="L163">    }</span>
+    /**
+     * Makes build on square
+     * @param pos - pos to build on
+     */
+    public void build(ArrayList&lt;Integer&gt; pos) {
+<span class="fc bfc" id="L169" title="All 2 branches covered.">        if (!this.player.checkPlayerWin()) {</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">            for (int i = 0; i &lt; this.builds; i++) {</span>
+<span class="fc" id="L171">                Square buildSq = square.getNewBoardSquare(pos.get(i));</span>
+<span class="fc" id="L172">                buildSq.build();</span>
+            }
+        }
+<span class="fc" id="L175">    }</span>
+<span class="fc" id="L176">    public void setBuilds(int num) { this.builds = num;}</span>
+<span class="fc" id="L177">    public int getBuilds() {return this.builds;}</span>
+    public Square getSquare() {
+<span class="fc" id="L179">        return this.square;</span>
+    }
+<span class="nc" id="L181">    public int getPosition() {return this.square.getPosition();}</span>
+    public Player getPlayer() {
+<span class="fc" id="L183">        return this.player;</span>
+    }
+<span class="nc" id="L185">    public int getId() {return this.id;}</span>
+    public String getPlayerID() {
+<span class="fc" id="L187">        return this.player.getID();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

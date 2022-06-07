@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ApolloWorker.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Santorini</a> &gt; <a href="index.source.html" class="el_package">com.nandini.hw3</a> &gt; <span class="el_source">ApolloWorker.java</span></div><h1>ApolloWorker.java</h1><pre class="source lang-java linenums">package com.nandini.hw3;
+
+public class ApolloWorker extends Worker{
+    public ApolloWorker(int workerID) {
+<span class="fc" id="L5">        super(workerID);</span>
+<span class="fc" id="L6">    }</span>
+    /**
+     * Makes regular moves &amp; also forces into an opponent workers position into their position
+     * @param direction - direction to move (U, D, L, R, LU, LD, RU, RD)
+     */
+    @Override
+    public void makeMove(String direction) {
+<span class="fc" id="L13">        int pos = getPos(direction);</span>
+<span class="fc" id="L14">        Square newSq = getSquare().getNewBoardSquare(pos);</span>
+<span class="fc" id="L15">        Square sq = getSquare();</span>
+<span class="pc bpc" id="L16" title="1 of 2 branches missed.">        if (specialCondition(pos, newSq)) {</span>
+<span class="fc" id="L17">            Worker opponent = newSq.getWorker();</span>
+<span class="fc" id="L18">            getSquare().removeWorker();</span>
+<span class="fc" id="L19">            opponent.setOnSquare(getSquare());</span>
+<span class="fc" id="L20">            newSq.removeWorker();</span>
+<span class="fc" id="L21">            newSq.addWorker(this);</span>
+<span class="fc" id="L22">            sq.addWorker(opponent);</span>
+<span class="fc" id="L23">        }</span>
+<span class="nc bnc" id="L24" title="All 2 branches missed.">        else if (!getSquare().isValidToMoveOn(pos)) {</span>
+<span class="nc" id="L25">            throw new IllegalStateException(&quot;worker cannot move to that position&quot;);</span>
+        }
+<span class="fc" id="L27">        updateSquare(pos);</span>
+<span class="fc" id="L28">    }</span>
+    /**
+     * Checks whether the worker is trying to move on a position that has a worker on it
+     * @param pos - position that worker is trying to move on
+     * @param newSq - square that worker is trying to move on
+     * @return true if the special condition applies, false otherwise
+     */
+    private boolean specialCondition(int pos, Square newSq) {
+<span class="pc bpc" id="L36" title="3 of 6 branches missed.">        return newSq.hasWorker() &amp;&amp; !newSq.hasDome() &amp;&amp; getSquare().checkLevels(pos)</span>
+<span class="pc bpc" id="L37" title="1 of 2 branches missed.">                &amp;&amp; !newSq.getWorker().getPlayerID().equalsIgnoreCase(getPlayerID());</span>
+    }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
