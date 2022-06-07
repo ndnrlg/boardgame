@@ -1,7 +1,7 @@
 # How to Run Game & Play
-To start backend run `mvn install` and `mvn exec:exec` in the **java** directory under hw3-santorini-ndnrlg
+To start backend run `mvn install` and `mvn exec:exec` in the **java** directory under boardgame
 
-To start frontend run `npm install`, `npm run compile`, and then `npm run start` in the **frontend** directory under hw3-santorini-ndnrlg.
+To start frontend run `npm install`, `npm run compile`, and then `npm run start` in the **frontend** directory under boardgame
 
 To play the game: 
 1. Select game power for each player on the player’s turn (If nothing is selected, default to “No God Power” for both)
